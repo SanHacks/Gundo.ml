@@ -1,4 +1,4 @@
-# Personal-web-cv
+# Gundo.ml
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ed4e3749-3731-4bb9-8aa7-61fd1a675e0e/deploy-status)](https://app.netlify.com/sites/gundo/deploys)
 <br>
