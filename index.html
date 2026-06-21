@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,10 +16,10 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        ink: '#0E0F13',
-        offwhite: '#F2EFE9',
-        matrix: '#00FF66',
-        mint: '#4DE8B0',
+        ink: 'rgb(var(--color-ink) / <alpha-value>)',
+        offwhite: 'rgb(var(--color-offwhite) / <alpha-value>)',
+        matrix: 'rgb(var(--color-matrix) / <alpha-value>)',
+        mint: 'rgb(var(--color-mint) / <alpha-value>)',
       },
       fontFamily: {
         display: ['Space Grotesk', 'sans-serif'],
@@ -47,23 +47,52 @@ tailwind.config = {
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <style>
+/* === Theme tokens === */
+:root {
+  --color-ink: 14 15 19;
+  --color-offwhite: 242 238 233;
+  --color-matrix: 0 255 102;
+  --color-mint: 78 232 176;
+  --scanline: rgba(0,255,102,0.012);
+  --surface-border: rgba(242,238,233,0.06);
+  --surface-bg: rgba(242,238,233,0.015);
+  --text-muted: rgba(242,238,233,0.40);
+  --text-secondary: rgba(242,238,233,0.55);
+  --text-body: rgba(242,238,233,0.70);
+  --scrollbar-track: #0E0F13;
+}
+
+[data-theme="light"] {
+  --color-ink: 245 243 239;
+  --color-offwhite: 26 26 26;
+  --color-matrix: 0 136 68;
+  --color-mint: 22 170 136;
+  --scanline: transparent;
+  --surface-border: rgba(0,0,0,0.08);
+  --surface-bg: rgba(0,0,0,0.02);
+  --text-muted: rgba(0,0,0,0.40);
+  --text-secondary: rgba(0,0,0,0.55);
+  --text-body: rgba(0,0,0,0.70);
+  --scrollbar-track: #E8E5E0;
+}
+
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#00FF66 #0E0F13}
-body{background:#0E0F13 radial-gradient(ellipse at 50% 0%,rgba(0,255,102,0.04),transparent 70%);color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100dvh}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,102,0.012) 2px,rgba(0,255,102,0.012) 4px)}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:rgb(var(--color-matrix)) var(--scrollbar-track)}
+body{background:rgb(var(--color-ink)) radial-gradient(ellipse at 50% 0%,rgba(var(--color-matrix)/0.04),transparent 70%);color:rgb(var(--color-offwhite));font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100dvh;transition:background .3s ease-out}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,var(--scanline) 2px,var(--scanline) 4px);transition:background .3s ease-out}
 
 ::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:#0E0F13}
-::-webkit-scrollbar-thumb{background:#00FF66;border-radius:3px;box-shadow:0 0 8px rgba(0,255,102,0.3)}
-::selection{background:rgba(0,255,102,0.3);color:#0E0F13}
+::-webkit-scrollbar-track{background:var(--scrollbar-track)}
+::-webkit-scrollbar-thumb{background:rgb(var(--color-matrix));border-radius:3px;box-shadow:0 0 8px rgba(var(--color-matrix)/0.3)}
+::selection{background:rgba(var(--color-matrix)/0.3);color:rgb(var(--color-ink))}
 
 .z-nav{z-index:50}
 .z-overlay{z-index:40}
 .z-content{z-index:10}
 
-.nav-link{position:relative;color:rgba(242,238,233,0.55);transition:color .2s ease-out}
-.nav-link:hover,.nav-link.active{color:#F2EFE9}
-.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:#00FF66;box-shadow:0 0 8px rgba(0,255,102,0.5);transition:width .2s ease-out}
+.nav-link{position:relative;color:var(--text-secondary);transition:color .2s ease-out}
+.nav-link:hover,.nav-link.active{color:rgb(var(--color-offwhite))}
+.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:rgb(var(--color-matrix));box-shadow:0 0 8px rgba(var(--color-matrix)/0.5);transition:width .2s ease-out}
 .nav-link:hover::after,.nav-link.active::after{width:100%}
 
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
@@ -76,57 +105,61 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .tilt-wrap{perspective:800px;transform-style:preserve-3d}
 .tilt-inner{transition:transform .1s ease-out;transform-style:preserve-3d;will-change:transform}
 
-.magnetic-btn{position:relative;display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:9999px;font-family:Inter,sans-serif;font-weight:500;font-size:.9375rem;border:1px solid rgba(0,255,102,0.3);background:transparent;color:#F2EFE9;cursor:pointer;transition:border-color .2s ease-out,box-shadow .2s ease-out;will-change:transform;overflow:hidden}
-.magnetic-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,255,102,0.12),rgba(78,232,176,0.06));opacity:0;transition:opacity .3s ease-out}
+/* Theme toggle */
+.theme-toggle{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9999px;border:1px solid var(--surface-border);background:transparent;color:var(--text-secondary);cursor:pointer;transition:color .2s ease-out,border-color .2s ease-out}
+.theme-toggle:hover{color:rgb(var(--color-matrix));border-color:rgba(var(--color-matrix)/0.3)}
+.theme-toggle svg{width:18px;height:18px}
+
+/* Magnetic btn */
+.magnetic-btn{position:relative;display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:9999px;font-family:Inter,sans-serif;font-weight:500;font-size:.9375rem;border:1px solid rgba(var(--color-matrix)/0.3);background:transparent;color:rgb(var(--color-offwhite));cursor:pointer;transition:border-color .2s ease-out,box-shadow .2s ease-out;will-change:transform;overflow:hidden}
+.magnetic-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(var(--color-matrix)/0.12),rgba(var(--color-mint)/0.06));opacity:0;transition:opacity .3s ease-out}
 .magnetic-btn:hover::before{opacity:1}
-.magnetic-btn:hover{border-color:#00FF66;box-shadow:0 0 24px rgba(0,255,102,0.2),0 0 48px rgba(0,255,102,0.08)}
+.magnetic-btn:hover{border-color:rgb(var(--color-matrix));box-shadow:0 0 24px rgba(var(--color-matrix)/0.2),0 0 48px rgba(var(--color-matrix)/0.08)}
 .magnetic-btn .btn-text{position:relative;z-index:1}
 
 .section-heading{font-family:Space Grotesk,sans-serif;font-weight:600;font-size:2rem;text-wrap:balance;display:inline-block;position:relative;margin-bottom:2.5rem}
-.section-heading::after{content:'';position:absolute;bottom:-6px;left:0;width:36px;height:3px;background:#00FF66;border-radius:2px;box-shadow:0 0 12px rgba(0,255,102,0.5)}
+.section-heading::after{content:'';position:absolute;bottom:-6px;left:0;width:36px;height:3px;background:rgb(var(--color-matrix));border-radius:2px;box-shadow:0 0 12px rgba(var(--color-matrix)/0.5)}
 
-.terminal-prefix{display:inline-flex;align-items:center;gap:8px;font-family:JetBrains Mono,monospace;font-size:.8rem;color:#00FF66;opacity:0.6}
-.terminal-prefix::before{content:'$';color:#00FF66}
+.terminal-prefix{display:inline-flex;align-items:center;gap:8px;font-family:JetBrains Mono,monospace;font-size:.8rem;color:rgb(var(--color-matrix));opacity:0.6}
+.terminal-prefix::before{content:'$'}
 
 .sticker-pile{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:20px;max-width:680px;margin:0 auto}
-.sticker{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:9999px;font-family:JetBrains Mono,monospace;font-size:.8rem;border:1px solid rgba(242,238,233,0.1);background:rgba(14,15,19,0.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(242,238,233,0.8);cursor:grab;user-select:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s ease-out,border-color .25s ease-out;position:relative;touch-action:none}
-.sticker:hover{transform:translateY(-6px) scale(1.05) !important;box-shadow:0 12px 32px rgba(0,255,102,0.2);border-color:#00FF66;color:#F2EFE9}
+.sticker{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:9999px;font-family:JetBrains Mono,monospace;font-size:.8rem;border:1px solid var(--surface-border);background:rgba(var(--color-ink)/0.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--text-secondary);cursor:grab;user-select:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s ease-out,border-color .25s ease-out;position:relative;touch-action:none}
+.sticker:hover{transform:translateY(-6px) scale(1.05) !important;box-shadow:0 12px 32px rgba(var(--color-matrix)/0.2);border-color:rgb(var(--color-matrix));color:rgb(var(--color-offwhite))}
 .sticker:active{cursor:grabbing}
 .sticker img{width:14px;height:14px;flex-shrink:0;border-radius:0}
 
-.project-card{position:relative;border-radius:16px;border:1px solid rgba(242,238,233,0.06);background:rgba(242,238,233,0.015);overflow:hidden;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease-out;will-change:transform;perspective:600px;transform-style:preserve-3d}
-.project-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 20px 48px rgba(0,0,0,0.5),0 0 0 1px rgba(0,255,102,0.15)}
+.project-card{position:relative;border-radius:16px;border:1px solid var(--surface-border);background:var(--surface-bg);overflow:hidden;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease-out,background .3s ease-out;will-change:transform;perspective:600px;transform-style:preserve-3d}
+.project-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 20px 48px rgba(0,0,0,0.5),0 0 0 1px rgba(var(--color-matrix)/0.15)}
 .project-card img{width:100%;height:200px;object-fit:cover;transition:transform .4s ease-out}
 .project-card:hover img{transform:scale(1.03)}
 
-.avatar-frame{position:relative;width:200px;height:200px;border-radius:50%;border:2px solid rgba(0,255,102,0.25);overflow:hidden;flex-shrink:0;transition:border-color .3s ease-out,box-shadow .3s ease-out}
-.avatar-frame:hover{border-color:#00FF66;box-shadow:0 0 32px rgba(0,255,102,0.2),0 0 64px rgba(0,255,102,0.08)}
+.avatar-frame{position:relative;width:200px;height:200px;border-radius:50%;border:2px solid rgba(var(--color-matrix)/0.25);overflow:hidden;flex-shrink:0;transition:border-color .3s ease-out,box-shadow .3s ease-out}
+.avatar-frame:hover{border-color:rgb(var(--color-matrix));box-shadow:0 0 32px rgba(var(--color-matrix)/0.2),0 0 64px rgba(var(--color-matrix)/0.08)}
 .avatar-frame img{width:100%;height:100%;object-fit:cover}
 
-.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:6px;font-family:JetBrains Mono,monospace;font-size:.75rem;border:1px solid rgba(78,232,176,0.2);background:rgba(78,232,176,0.06);color:#4DE8B0}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:6px;font-family:JetBrains Mono,monospace;font-size:.75rem;border:1px solid rgba(var(--color-mint)/0.2);background:rgba(var(--color-mint)/0.06);color:rgb(var(--color-mint))}
 
-.nav-blur{background:rgba(14,15,19,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(242,238,233,0.06)}
+.nav-blur{background:rgba(var(--color-ink)/0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--surface-border);transition:background .3s ease-out}
 
-.mobile-nav{position:fixed;top:0;right:0;bottom:0;width:280px;background:rgba(14,15,19,0.98);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-left:1px solid rgba(242,238,233,0.08);transform:translateX(100%);transition:transform .3s cubic-bezier(.22,1,.36,1);z-index:60;padding:80px 32px 32px}
+.mobile-nav{position:fixed;top:0;right:0;bottom:0;width:280px;background:rgba(var(--color-ink)/0.98);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-left:1px solid var(--surface-border);transform:translateX(100%);transition:transform .3s cubic-bezier(.22,1,.36,1);z-index:60;padding:80px 32px 32px}
 .mobile-nav.open{transform:translateX(0)}
-.mobile-nav a{display:block;padding:12px 0;color:rgba(242,238,233,0.6);font-family:Space Grotesk,sans-serif;font-size:1.25rem;border-bottom:1px solid rgba(242,238,233,0.05);transition:color .2s ease-out}
-.mobile-nav a:hover{color:#00FF66}
+.mobile-nav a{display:block;padding:12px 0;color:var(--text-secondary);font-family:Space Grotesk,sans-serif;font-size:1.25rem;border-bottom:1px solid var(--surface-border);transition:color .2s ease-out}
+.mobile-nav a:hover{color:rgb(var(--color-matrix))}
 
-/* Experience timeline */
 .exp-timeline{position:relative;padding-left:32px}
-.exp-timeline::before{content:'';position:absolute;left:11px;top:6px;bottom:6px;width:2px;background:linear-gradient(to bottom,rgba(0,255,102,0.5),rgba(0,255,102,0.05));border-radius:1px}
-.exp-node{position:relative;margin-bottom:28px;padding:20px 24px;border-radius:12px;border:1px solid rgba(242,238,233,0.06);background:rgba(242,238,233,0.015);transition:border-color .2s ease-out,box-shadow .2s ease-out}
-.exp-node:hover{border-color:rgba(0,255,102,0.2);box-shadow:0 0 24px rgba(0,255,102,0.05)}
+.exp-timeline::before{content:'';position:absolute;left:11px;top:6px;bottom:6px;width:2px;background:linear-gradient(to bottom,rgba(var(--color-matrix)/0.5),rgba(var(--color-matrix)/0.05));border-radius:1px}
+.exp-node{position:relative;margin-bottom:28px;padding:20px 24px;border-radius:12px;border:1px solid var(--surface-border);background:var(--surface-bg);transition:border-color .2s ease-out,box-shadow .2s ease-out}
+.exp-node:hover{border-color:rgba(var(--color-matrix)/0.2);box-shadow:0 0 24px rgba(var(--color-matrix)/0.05)}
 .exp-node:last-child{margin-bottom:0}
-.exp-node::before{content:'';position:absolute;left:-27px;top:26px;width:10px;height:10px;border-radius:50%;background:#00FF66;box-shadow:0 0 12px rgba(0,255,102,0.4)}
+.exp-node::before{content:'';position:absolute;left:-27px;top:26px;width:10px;height:10px;border-radius:50%;background:rgb(var(--color-matrix));box-shadow:0 0 12px rgba(var(--color-matrix)/0.4)}
 
-/* Collapsible */
-.ed-toggle{list-style:none;cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:10px;border:1px solid rgba(242,238,233,0.06);background:rgba(242,238,233,0.015);transition:border-color .2s ease-out}
+.ed-toggle{list-style:none;cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:10px;border:1px solid var(--surface-border);background:var(--surface-bg);transition:border-color .2s ease-out}
 .ed-toggle::-webkit-details-marker{display:none}
-.ed-toggle:hover{border-color:rgba(0,255,102,0.2)}
-.ed-toggle::after{content:'';width:10px;height:10px;border-right:2px solid rgba(242,238,233,0.4);border-bottom:2px solid rgba(242,238,233,0.4);transform:rotate(45deg);transition:transform .2s ease-out;margin-right:4px}
+.ed-toggle:hover{border-color:rgba(var(--color-matrix)/0.2)}
+.ed-toggle::after{content:'';width:10px;height:10px;border-right:2px solid var(--text-muted);border-bottom:2px solid var(--text-muted);transform:rotate(45deg);transition:transform .2s ease-out;margin-right:4px}
 details[open] .ed-toggle::after{transform:rotate(-135deg);margin-top:4px}
-details[open] .ed-toggle{border-color:rgba(0,255,102,0.2)}
+details[open] .ed-toggle{border-color:rgba(var(--color-matrix)/0.2)}
 .ed-body{padding:20px 0 0}
 
 /* --- Widget theming --- */
@@ -135,53 +168,53 @@ codersrank-education,
 codersrank-portfolio,
 codersrank-skills-chart,
 codersrank-activity {
-  --badge-bg: rgba(0,255,102,0.15);
-  --badge-text: #00FF66;
-  --badge-border: rgba(0,255,102,0.3);
+  --badge-bg: rgba(var(--color-matrix)/0.15);
+  --badge-text: rgb(var(--color-matrix));
+  --badge-border: rgba(var(--color-matrix)/0.3);
   --bg: transparent;
-  --card-bg: rgba(242,238,233,0.03);
-  --card-border: rgba(242,238,233,0.08);
-  --text: rgba(242,238,233,0.75);
-  --text-secondary: rgba(242,238,233,0.45);
-  --text-title: #F2EFE9;
-  --timeline-color: #00FF66;
-  --progress-bg: rgba(242,238,233,0.08);
-  --progress-fg: linear-gradient(135deg, #00FF66, #4DE8B0);
-  --star-color: #00FF66;
-  --tag-bg: rgba(78,232,176,0.1);
-  --tag-text: #4DE8B0;
-  --tag-border: rgba(78,232,176,0.2);
+  --card-bg: var(--surface-bg);
+  --card-border: var(--surface-border);
+  --text: var(--text-body);
+  --text-secondary: var(--text-muted);
+  --text-title: rgb(var(--color-offwhite));
+  --timeline-color: rgb(var(--color-matrix));
+  --progress-bg: var(--surface-border);
+  --progress-fg: linear-gradient(135deg, rgb(var(--color-matrix)), rgb(var(--color-mint)));
+  --star-color: rgb(var(--color-matrix));
+  --tag-bg: rgba(var(--color-mint)/0.1);
+  --tag-text: rgb(var(--color-mint));
+  --tag-border: rgba(var(--color-mint)/0.2);
   display: block;
   width: 100%;
 }
 codersrank-summary {
   --avatar-size: 0;
-  --badge-bg: rgba(0,255,102,0.15);
-  --badge-text: #00FF66;
+  --badge-bg: rgba(var(--color-matrix)/0.15);
+  --badge-text: rgb(var(--color-matrix));
   --bg: transparent;
-  --text: rgba(242,238,233,0.75);
-  --text-secondary: rgba(242,238,233,0.45);
-  --text-title: #F2EFE9;
+  --text: var(--text-body);
+  --text-secondary: var(--text-muted);
+  --text-title: rgb(var(--color-offwhite));
   display: block;
   width: 100%;
 }
 
-/* GitHub Calendar dark theme */
+/* GitHub Calendar */
 .github-calendar { background: transparent !important; border: none !important; }
 .github-calendar .calendar { background: transparent !important; border: none !important; }
 .github-calendar .calendar img { display: none; }
-.github-calendar .calendar .contrib-column { color: rgba(242,238,233,0.5) !important; font-family: JetBrains Mono, monospace !important; font-size: .75rem !important; }
-.github-calendar .calendar .contrib-column .text-muted { color: rgba(242,238,233,0.3) !important; }
-.github-calendar .calendar h2 { color: #F2EFE9 !important; font-family: Space Grotesk, sans-serif !important; font-weight: 600 !important; }
+.github-calendar .calendar .contrib-column { color: var(--text-muted) !important; font-family: JetBrains Mono, monospace !important; font-size: .75rem !important; }
+.github-calendar .calendar .contrib-column .text-muted { color: currentColor !important; }
+.github-calendar .calendar h2 { color: rgb(var(--color-offwhite)) !important; font-family: Space Grotesk, sans-serif !important; font-weight: 600 !important; }
 .calendar .graph { padding: 0 !important; }
-.calendar .legend { color: rgba(242,238,233,0.4) !important; font-family: JetBrains Mono, monospace !important; font-size: .7rem !important; }
-.ContributionCalendar-day[data-level="0"] { fill: rgba(242,238,233,0.06) !important; }
-.ContributionCalendar-day[data-level="1"] { fill: rgba(0,255,102,0.2) !important; }
-.ContributionCalendar-day[data-level="2"] { fill: rgba(0,255,102,0.4) !important; }
-.ContributionCalendar-day[data-level="3"] { fill: rgba(0,255,102,0.6) !important; }
-.ContributionCalendar-day[data-level="4"] { fill: #00FF66 !important; }
+.calendar .legend { color: var(--text-muted) !important; font-family: JetBrains Mono, monospace !important; font-size: .7rem !important; }
+.ContributionCalendar-day[data-level="0"] { fill: rgba(var(--color-offwhite)/0.06) !important; }
+.ContributionCalendar-day[data-level="1"] { fill: rgba(var(--color-matrix)/0.2) !important; }
+.ContributionCalendar-day[data-level="2"] { fill: rgba(var(--color-matrix)/0.4) !important; }
+.ContributionCalendar-day[data-level="3"] { fill: rgba(var(--color-matrix)/0.6) !important; }
+.ContributionCalendar-day[data-level="4"] { fill: rgb(var(--color-matrix)) !important; }
 
-.widget-card { border-radius: 12px; border: 1px solid rgba(242,238,233,0.06); background: rgba(242,238,233,0.015); padding: 24px; }
+.widget-card { border-radius: 12px; border: 1px solid var(--surface-border); background: var(--surface-bg); padding: 24px; }
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
@@ -203,11 +236,11 @@ codersrank-summary {
 <body>
 
 <!-- Mobile Nav Overlay -->
-<div id="mobileOverlay" class="fixed inset-0 bg-ink/60 z-overlay hidden" onclick="closeMobileNav()"></div>
+<div id="mobileOverlay" class="fixed inset-0 z-overlay hidden" onclick="closeMobileNav()" style="background:rgba(var(--color-ink)/0.6)"></div>
 
 <!-- Mobile Nav -->
 <nav id="mobileNav" class="mobile-nav">
-  <button onclick="closeMobileNav()" class="absolute top-6 right-6 text-offwhite/60 hover:text-matrix transition-colors" aria-label="Close navigation">
+  <button onclick="closeMobileNav()" class="absolute top-6 right-6" style="color:var(--text-muted);background:none;border:none;cursor:pointer" aria-label="Close navigation">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
   <a href="#hero" onclick="closeMobileNav()">Home</a>
@@ -223,17 +256,23 @@ codersrank-summary {
 <nav class="nav-blur fixed top-0 left-0 right-0 z-nav" style="padding-top:env(safe-area-inset-top,0px)">
   <div class="max-w-5xl mx-auto flex items-center justify-between px-6 h-16">
     <a href="#hero" class="font-display font-semibold text-offwhite text-lg tracking-tight">Gundo<span class="text-matrix">.</span></a>
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#about" class="nav-link font-mono text-sm">About</a>
-      <a href="#techstack" class="nav-link font-mono text-sm">Tech Stack</a>
-      <a href="#experience" class="nav-link font-mono text-sm">Experience</a>
-      <a href="#projects" class="nav-link font-mono text-sm">Projects</a>
-      <a href="#github" class="nav-link font-mono text-sm">GitHub</a>
-      <a href="#contact" class="nav-link font-mono text-sm">Contact</a>
+    <div class="flex items-center gap-6">
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about" class="nav-link font-mono text-sm">About</a>
+        <a href="#techstack" class="nav-link font-mono text-sm">Tech Stack</a>
+        <a href="#experience" class="nav-link font-mono text-sm">Experience</a>
+        <a href="#projects" class="nav-link font-mono text-sm">Projects</a>
+        <a href="#github" class="nav-link font-mono text-sm">GitHub</a>
+        <a href="#contact" class="nav-link font-mono text-sm">Contact</a>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button onclick="openMobileNav()" class="md:hidden text-offwhite/70 hover:text-offwhite transition-colors p-2" aria-label="Open navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
-    <button onclick="openMobileNav()" class="md:hidden text-offwhite/70 hover:text-offwhite transition-colors p-2" aria-label="Open navigation">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
   </div>
 </nav>
 
@@ -253,13 +292,13 @@ codersrank-summary {
         <h1 class="stagger-item font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-offwhite leading-tight text-balance mb-3" data-delay="100">Gundo Sifhufhi</h1>
         <p class="stagger-item font-mono text-sm text-matrix/60 mb-2" data-delay="175"><span class="text-matrix/40">$</span> whoami</p>
         <p class="stagger-item font-display text-lg sm:text-xl text-offwhite/60 mb-2 text-balance" data-delay="200">Software Developer</p>
-        <p class="stagger-item text-offwhite/40 text-base max-w-lg text-pretty mb-8 mx-auto md:mx-0 font-mono text-sm" data-delay="300"><span class="text-matrix/40">$</span> echo "building cool stuff in South Africa"</p>
+        <p class="stagger-item max-w-lg text-pretty mb-8 mx-auto md:mx-0 font-mono text-sm" data-delay="300" style="color:var(--text-muted)"><span style="color:rgba(var(--color-matrix)/0.4)">$</span> echo "building cool stuff in South Africa"</p>
         <div class="stagger-item flex items-center gap-4 justify-center md:justify-start" data-delay="400">
           <a href="#contact" class="magnetic-btn" data-strength="8">
             <span class="btn-text">Get in touch</span>
             <svg class="relative z-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
-          <a href="#projects" class="text-offwhite/40 hover:text-matrix transition-colors font-mono text-sm">See work →</a>
+          <a href="#projects" class="transition-colors font-mono text-sm" style="color:var(--text-muted);--hover-color:rgb(var(--color-matrix))" onmouseenter="this.style.color=this.style.getPropertyValue('--hover-color')" onmouseleave="this.style.color=''">See work →</a>
         </div>
       </div>
     </div>
@@ -268,11 +307,11 @@ codersrank-summary {
 
 <!-- About -->
 <section id="about" class="px-6 py-20 md:py-28 relative">
-  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,102,0.02)_0%,transparent_60%)] pointer-events-none"></div>
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at center,rgba(var(--color-matrix)/0.02) 0%,transparent 60%)"></div>
   <div class="max-w-3xl mx-auto relative z-content">
     <p class="terminal-prefix mb-3">about.md</p>
     <h2 class="section-heading reveal">About</h2>
-    <div class="reveal space-y-4 text-offwhite/70 leading-relaxed text-pretty max-w-2xl" style="transition-delay:100ms">
+    <div class="reveal space-y-4 leading-relaxed text-pretty max-w-2xl" style="color:var(--text-body);transition-delay:100ms">
       <p>Developer with a passion for problem-solving through software engineering. Fluent in various spoken and programming languages. Flexible and energetic with the ability to quickly master new concepts and technologies.</p>
       <p>Primarily self-taught — adapts and excels in new environments with a dose of self-reliance. An attentive listener, good at conveying and relaying information, always willing to face and resolve challenges within software development.</p>
       <p>Currently working as <strong class="text-offwhite">Backend Developer</strong> at <a href="https://vaimo.com/" target="_blank" rel="noopener" class="text-matrix hover:text-mint transition-colors">Vaimo</a>.</p>
@@ -281,12 +320,12 @@ codersrank-summary {
 </section>
 
 <!-- Tech Stack -->
-<section id="techstack" class="px-6 py-20 md:py-28 bg-white/[.015] relative">
-  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,102,0.015)_0%,transparent_60%)] pointer-events-none"></div>
+<section id="techstack" class="px-6 py-20 md:py-28 relative">
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at center,rgba(var(--color-matrix)/0.015) 0%,transparent 60%)"></div>
   <div class="max-w-3xl mx-auto text-center relative z-content">
     <p class="terminal-prefix justify-center mb-3">tech-stack</p>
     <h2 class="section-heading reveal">Tech Stack</h2>
-    <p class="reveal text-offwhite/40 text-sm font-mono mb-8" style="transition-delay:80ms">// stickers on my laptop lid</p>
+    <p class="reveal text-sm font-mono mb-8" style="color:var(--text-muted);transition-delay:80ms">// stickers on my laptop lid</p>
     <div class="reveal sticker-pile" id="stickerPile" style="transition-delay:150ms"></div>
     <div class="reveal max-w-xl mx-auto mt-12" style="transition-delay:250ms">
       <div class="widget-card py-6">
@@ -299,20 +338,19 @@ codersrank-summary {
 
 <!-- Experience -->
 <section id="experience" class="px-6 py-20 md:py-28 relative">
-  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(0,255,102,0.025)_0%,transparent_60%)] pointer-events-none"></div>
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 50% 30%,rgba(var(--color-matrix)/0.025) 0%,transparent 60%)"></div>
   <div class="max-w-3xl mx-auto relative z-content">
     <p class="terminal-prefix mb-3">experience</p>
     <h2 class="section-heading reveal">Experience</h2>
 
-    <!-- Static highlight -->
     <div class="reveal exp-timeline mt-10" style="transition-delay:80ms">
       <div class="exp-node">
         <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2">
           <h3 class="font-display font-semibold text-lg text-offwhite">Backend Developer</h3>
-          <span class="text-[11px] bg-matrix/10 text-matrix font-mono px-2.5 py-0.5 rounded-full border border-matrix/20">Current</span>
+          <span class="text-[11px] font-mono px-2.5 py-0.5 rounded-full border" style="background:rgba(var(--color-matrix)/0.1);color:rgb(var(--color-matrix));border-color:rgba(var(--color-matrix)/0.2)">Current</span>
         </div>
-        <p class="text-matrix/50 font-mono text-xs mb-2">Vaimo &mdash; 2025 &ndash; Present</p>
-        <p class="text-offwhite/60 text-sm leading-relaxed text-pretty">Backend systems for enterprise e-commerce. PHP, Magento, modern web services, API design.</p>
+        <p class="font-mono text-xs mb-2" style="color:rgba(var(--color-matrix)/0.5)">Vaimo &mdash; 2025 &ndash; Present</p>
+        <p class="text-sm leading-relaxed text-pretty" style="color:var(--text-body)">Backend systems for enterprise e-commerce. PHP, Magento, modern web services, API design.</p>
         <div class="flex gap-2 mt-3 flex-wrap">
           <span class="tag">PHP</span>
           <span class="tag">Magento</span>
@@ -323,18 +361,16 @@ codersrank-summary {
       </div>
     </div>
 
-    <!-- Full history from CodersRank -->
     <div class="reveal mt-10" style="transition-delay:140ms">
       <div class="flex items-center gap-2 mb-4">
-        <span class="text-offwhite/30 font-mono text-xs">Full history</span>
-        <span class="flex-1 h-px bg-white/[.06]"></span>
+        <span class="font-mono text-xs" style="color:var(--text-muted)">Full history</span>
+        <span class="flex-1 h-px" style="background:var(--surface-border)"></span>
       </div>
       <div class="widget-card">
         <codersrank-work-experience username="sanhacks" logos branding="false"></codersrank-work-experience>
       </div>
     </div>
 
-    <!-- Education collapsible -->
     <div class="reveal mt-10" style="transition-delay:200ms">
       <details>
         <summary class="ed-toggle">
@@ -351,8 +387,8 @@ codersrank-summary {
 </section>
 
 <!-- Projects -->
-<section id="projects" class="px-6 py-20 md:py-28 bg-white/[.015] relative">
-  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,102,0.015)_0%,transparent_60%)] pointer-events-none"></div>
+<section id="projects" class="px-6 py-20 md:py-28 relative">
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at center,rgba(var(--color-matrix)/0.015) 0%,transparent 60%)"></div>
   <div class="max-w-5xl mx-auto relative z-content">
     <p class="terminal-prefix mb-3">projects</p>
     <h2 class="section-heading reveal">Projects</h2>
@@ -361,7 +397,7 @@ codersrank-summary {
         <img src="https://user-images.githubusercontent.com/13138647/208878862-2e603101-83f2-4f07-9458-b324fb35c386.png" alt="Nile project screenshot" loading="lazy" />
         <div class="p-5">
           <h3 class="font-display font-semibold text-offwhite text-lg mb-1">Nile</h3>
-          <p class="text-offwhite/40 text-sm mb-3 text-pretty">Full-stack application</p>
+          <p class="text-sm mb-3 text-pretty" style="color:var(--text-muted)">Full-stack application</p>
           <div class="flex gap-2 flex-wrap"><span class="tag">PHP</span><span class="tag">Laravel</span></div>
         </div>
       </div>
@@ -369,7 +405,7 @@ codersrank-summary {
         <img src="https://user-images.githubusercontent.com/13138647/184584287-74562f4e-e77c-4706-a946-b5faa35ec9ee.PNG" alt="Fill The Gaps project screenshot" loading="lazy" />
         <div class="p-5">
           <h3 class="font-display font-semibold text-offwhite text-lg mb-1">Fill The Gaps</h3>
-          <p class="text-offwhite/40 text-sm mb-3 text-pretty">Community platform</p>
+          <p class="text-sm mb-3 text-pretty" style="color:var(--text-muted)">Community platform</p>
           <div class="flex gap-2 flex-wrap"><span class="tag">PHP</span><span class="tag">MySQL</span></div>
         </div>
       </div>
@@ -377,7 +413,7 @@ codersrank-summary {
         <img src="https://user-images.githubusercontent.com/13138647/205512547-ca80ecad-6e41-4c9b-baa2-76089b76f988.png" alt="Sage ChatGPT3 AI project screenshot" loading="lazy" />
         <div class="p-5">
           <h3 class="font-display font-semibold text-offwhite text-lg mb-1">Sage ChatGPT3 AI</h3>
-          <p class="text-offwhite/40 text-sm mb-3 text-pretty">AI-powered assistant</p>
+          <p class="text-sm mb-3 text-pretty" style="color:var(--text-muted)">AI-powered assistant</p>
           <div class="flex gap-2 flex-wrap"><span class="tag">Python</span><span class="tag">OpenAI</span></div>
         </div>
       </div>
@@ -387,25 +423,25 @@ codersrank-summary {
 
 <!-- GitHub Activity -->
 <section id="github" class="px-6 py-20 md:py-28 relative">
-  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,102,0.02)_0%,transparent_60%)] pointer-events-none"></div>
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at center,rgba(var(--color-matrix)/0.02) 0%,transparent 60%)"></div>
   <div class="max-w-4xl mx-auto relative z-content">
     <p class="terminal-prefix mb-3">github</p>
     <h2 class="section-heading reveal">GitHub</h2>
     <div class="reveal widget-card" style="transition-delay:100ms">
       <div class="calendar" id="githubCalendar">
-        <p class="text-offwhite/40 font-mono text-sm text-center py-8">Loading contribution data...</p>
+        <p class="font-mono text-sm text-center py-8" style="color:var(--text-muted)">Loading contribution data...</p>
       </div>
     </div>
     <div class="reveal flex items-center justify-center gap-6 mt-6" style="transition-delay:180ms">
       <iframe src="https://ghbtns.com/github-btn.html?user=sanhacks&type=follow&count=true" frameborder="0" scrolling="0" width="180" height="24" class="opacity-50 hover:opacity-100 transition-opacity"></iframe>
-      <a href="https://github.com/sanhacks" target="_blank" rel="noopener" class="text-offwhite/30 hover:text-matrix transition-colors font-mono text-xs">github.com/sanhacks →</a>
+      <a href="https://github.com/sanhacks" target="_blank" rel="noopener" class="transition-colors font-mono text-xs" style="color:var(--text-muted);--hover-color:rgb(var(--color-matrix))" onmouseenter="this.style.color=this.style.getPropertyValue('--hover-color')" onmouseleave="this.style.color=''">github.com/sanhacks →</a>
     </div>
   </div>
 </section>
 
 <!-- Stats + Portfolio -->
-<section id="stats" class="px-6 py-20 md:py-28 bg-white/[.015] relative">
-  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,102,0.015)_0%,transparent_60%)] pointer-events-none"></div>
+<section id="stats" class="px-6 py-20 md:py-28 relative">
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at center,rgba(var(--color-matrix)/0.015) 0%,transparent 60%)"></div>
   <div class="max-w-5xl mx-auto relative z-content">
     <p class="terminal-prefix mb-3">stats</p>
     <h2 class="section-heading reveal">Stats</h2>
@@ -428,11 +464,11 @@ codersrank-summary {
 
 <!-- Contact -->
 <section id="contact" class="px-6 py-20 md:py-28 relative">
-  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,102,0.02)_0%,transparent_60%)] pointer-events-none"></div>
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at center,rgba(var(--color-matrix)/0.02) 0%,transparent 60%)"></div>
   <div class="max-w-3xl mx-auto text-center relative z-content">
     <p class="terminal-prefix justify-center mb-3">contact</p>
     <h2 class="section-heading reveal">Contact</h2>
-    <p class="reveal text-offwhite/40 mb-10 text-pretty font-mono text-sm" style="transition-delay:80ms"><span class="text-matrix/40">$</span> echo "Let's build something cool together"</p>
+    <p class="reveal mb-10 text-pretty font-mono text-sm" style="color:var(--text-muted);transition-delay:80ms"><span style="color:rgba(var(--color-matrix)/0.4)">$</span> echo "Let's build something cool together"</p>
     <div class="reveal flex flex-wrap justify-center gap-4 mb-12" style="transition-delay:150ms">
       <a href="mailto:sifhufhisg@gmail.com" class="magnetic-btn" data-strength="6"><span class="btn-text font-mono text-sm">Email</span></a>
       <a href="https://github.com/sanhacks" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6"><span class="btn-text font-mono text-sm">GitHub</span></a>
@@ -444,14 +480,42 @@ codersrank-summary {
 </section>
 
 <!-- Footer -->
-<footer class="px-6 py-10 border-t border-white/[.05]">
+<footer class="px-6 py-10 border-t" style="border-color:var(--surface-border)">
   <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-    <p class="text-offwhite/20 font-mono text-xs">&copy; Gundo Sifhufhi</p>
-    <p class="text-offwhite/15 font-mono text-xs">Built with <span class="text-mint">&lt;/&gt;</span> in South Africa</p>
+    <p class="font-mono text-xs" style="color:var(--text-muted)">&copy; Gundo Sifhufhi</p>
+    <p class="font-mono text-xs" style="color:rgba(var(--color-offwhite)/0.15)">Built with <span class="text-mint">&lt;/&gt;</span> in South Africa</p>
   </div>
 </footer>
 
 <script>
+// === Theme management ===
+(function themeInit() {
+  var html = document.documentElement;
+  var sun = document.getElementById('themeIconSun');
+  var moon = document.getElementById('themeIconMoon');
+  var saved = localStorage.getItem('theme');
+  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  function setTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark') { sun.style.display = ''; moon.style.display = 'none'; }
+    else { sun.style.display = 'none'; moon.style.display = ''; }
+    // Re-trigger GitHub calendar colors
+    var cal = document.querySelector('.calendar');
+    if (cal && cal.__vue__) { /* no-op, colors change via CSS vars */ }
+  }
+
+  var initial = saved || (prefersDark ? 'dark' : 'light');
+  setTheme(initial);
+
+  document.getElementById('themeToggle').addEventListener('click', function() {
+    var current = html.getAttribute('data-theme');
+    setTheme(current === 'dark' ? 'light' : 'dark');
+  });
+})();
+
+// === Stagger hero ===
 (function staggerHero() {
   var items = document.querySelectorAll('.stagger-item');
   items.forEach(function(el) {
@@ -460,6 +524,7 @@ codersrank-summary {
   });
 })();
 
+// === Scroll reveal ===
 (function scrollReveal() {
   var els = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {
@@ -477,6 +542,7 @@ codersrank-summary {
   els.forEach(function(el) { observer.observe(el); });
 })();
 
+// === Avatar tilt ===
 (function avatarTilt() {
   var wrap = document.getElementById('avatarTilt');
   if (!wrap) return;
@@ -484,27 +550,25 @@ codersrank-summary {
   wrap.addEventListener('mousemove', function(e) {
     var rect = wrap.getBoundingClientRect();
     var x = e.clientX - rect.left, y = e.clientY - rect.top;
-    var midX = rect.width / 2, midY = rect.height / 2;
-    inner.style.transform = 'rotateX(' + ((midY - y) / midY * maxTilt) + 'deg) rotateY(' + ((x - midX) / midX * maxTilt) + 'deg)';
+    inner.style.transform = 'rotateX(' + ((rect.height/2 - y) / (rect.height/2) * maxTilt) + 'deg) rotateY(' + ((x - rect.width/2) / (rect.width/2) * maxTilt) + 'deg)';
   });
-  wrap.addEventListener('mouseleave', function() { inner.style.transform = 'rotateX(0deg) rotateY(0deg)'; });
+  wrap.addEventListener('mouseleave', function() { inner.style.transform = ''; });
 })();
 
+// === Project card tilt ===
 (function projectTilt() {
   var cards = document.querySelectorAll('.project-card[data-tilt]');
   cards.forEach(function(card) {
     card.addEventListener('mousemove', function(e) {
-      var rect = card.getBoundingClientRect();
-      var x = e.clientX - rect.left, y = e.clientY - rect.top, s = 6;
-      var midX = rect.width / 2, midY = rect.height / 2;
-      card.style.transform = 'perspective(600px) rotateX(' + ((midY - y) / midY * s) + 'deg) rotateY(' + ((x - midX) / midX * s) + 'deg) translateY(-4px)';
+      var rect = card.getBoundingClientRect(), s = 6;
+      var x = e.clientX - rect.left, y = e.clientY - rect.top;
+      card.style.transform = 'perspective(600px) rotateX(' + ((rect.height/2 - y) / (rect.height/2) * s) + 'deg) rotateY(' + ((x - rect.width/2) / (rect.width/2) * s) + 'deg) translateY(-4px)';
     });
-    card.addEventListener('mouseleave', function() {
-      card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) translateY(0)';
-    });
+    card.addEventListener('mouseleave', function() { card.style.transform = ''; });
   });
 })();
 
+// === Magnetic buttons ===
 (function magneticButtons() {
   var btns = document.querySelectorAll('.magnetic-btn');
   btns.forEach(function(btn) {
@@ -512,56 +576,46 @@ codersrank-summary {
     btn.addEventListener('mousemove', function(e) {
       var rect = btn.getBoundingClientRect();
       var x = e.clientX - rect.left - rect.width / 2, y = e.clientY - rect.top - rect.height / 2;
-      var dist = Math.sqrt(x*x + y*y), maxDist = Math.max(rect.width, rect.height);
-      var factor = Math.min(1, dist / maxDist) * strength, angle = Math.atan2(y, x);
+      var dist = Math.sqrt(x*x + y*y), angle = Math.atan2(y, x);
+      var factor = Math.min(1, dist / Math.max(rect.width, rect.height)) * strength;
       btn.style.transform = 'translate(' + (Math.cos(angle) * factor) + 'px, ' + (Math.sin(angle) * factor) + 'px)';
     });
-    btn.addEventListener('mouseleave', function() { btn.style.transform = 'translate(0, 0)'; });
+    btn.addEventListener('mouseleave', function() { btn.style.transform = ''; });
   });
 })();
 
+// === Sticker pile ===
 (function stickerPile() {
   var pile = document.getElementById('stickerPile');
   if (!pile) return;
   var stack = [
-    { label: 'PHP', icon: 'php', color: 'matrix' },
-    { label: 'Python', icon: 'python', color: 'mint' },
-    { label: 'JavaScript', icon: 'javascript', color: 'matrix' },
-    { label: 'TypeScript', icon: 'typescript', color: 'mint' },
-    { label: 'Laravel', icon: 'laravel', color: 'matrix' },
-    { label: 'Symfony', icon: 'symfony', color: 'mint' },
-    { label: 'React', icon: 'react', color: 'matrix' },
-    { label: 'MySQL', icon: 'mysql', color: 'mint' },
-    { label: 'PostgreSQL', icon: 'postgresql', color: 'matrix' },
-    { label: 'Redis', icon: 'redis', color: 'mint' },
-    { label: 'Docker', icon: 'docker', color: 'matrix' },
-    { label: 'Linux', icon: 'linux', color: 'mint' },
-    { label: 'Git', icon: 'git', color: 'matrix' },
-    { label: 'AWS', icon: 'amazonwebservices', color: 'mint' },
-    { label: 'HTML', icon: 'html5', color: 'matrix' },
-    { label: 'Tailwind', icon: 'tailwindcss', color: 'mint' },
-    { label: 'Composer', icon: 'composer', color: 'matrix' },
-    { label: 'Nginx', icon: 'nginx', color: 'mint' },
-    { label: 'Magento', icon: 'magento', color: 'matrix' },
-    { label: 'REST', icon: 'postman', color: 'mint' },
+    { label: 'PHP', icon: 'php', c: '#00FF66' }, { label: 'Python', icon: 'python', c: '#4DE8B0' },
+    { label: 'JavaScript', icon: 'javascript', c: '#00FF66' }, { label: 'TypeScript', icon: 'typescript', c: '#4DE8B0' },
+    { label: 'Laravel', icon: 'laravel', c: '#00FF66' }, { label: 'Symfony', icon: 'symfony', c: '#4DE8B0' },
+    { label: 'React', icon: 'react', c: '#00FF66' }, { label: 'MySQL', icon: 'mysql', c: '#4DE8B0' },
+    { label: 'PostgreSQL', icon: 'postgresql', c: '#00FF66' }, { label: 'Redis', icon: 'redis', c: '#4DE8B0' },
+    { label: 'Docker', icon: 'docker', c: '#00FF66' }, { label: 'Linux', icon: 'linux', c: '#4DE8B0' },
+    { label: 'Git', icon: 'git', c: '#00FF66' }, { label: 'AWS', icon: 'amazonwebservices', c: '#4DE8B0' },
+    { label: 'HTML', icon: 'html5', c: '#00FF66' }, { label: 'Tailwind', icon: 'tailwindcss', c: '#4DE8B0' },
+    { label: 'Composer', icon: 'composer', c: '#00FF66' }, { label: 'Nginx', icon: 'nginx', c: '#4DE8B0' },
+    { label: 'Magento', icon: 'magento', c: '#00FF66' }, { label: 'REST', icon: 'postman', c: '#4DE8B0' },
   ];
-  var rotations = [-3, 2, -5, 4, -2, 6, -4, 3, -6, 5, -3, 2, -4, 5, -2, 3, -5, 4, -6, 3];
-  var hex = { matrix: '00FF66', mint: '4DE8B0' };
+  var r = [-3, 2, -5, 4, -2, 6, -4, 3, -6, 5, -3, 2, -4, 5, -2, 3, -5, 4, -6, 3];
   stack.forEach(function(item, i) {
     var el = document.createElement('div');
     el.className = 'sticker';
     el.setAttribute('data-index', i);
-    el.style.transform = 'rotate(' + (rotations[i % rotations.length]) + 'deg)';
-    el.innerHTML = '<img src="https://cdn.simpleicons.org/' + item.icon + '/' + hex[item.color] + '" alt="" width="14" height="14" loading="lazy" />' + item.label;
+    el.style.transform = 'rotate(' + r[i % r.length] + 'deg)';
+    el.innerHTML = '<img src="https://cdn.simpleicons.org/' + item.icon + '/' + item.c.slice(1) + '" alt="" width="14" height="14" loading="lazy" />' + item.label;
     pile.appendChild(el);
   });
-  var dragEl = null, offsetX, offsetY;
+  var dragEl = null, ox, oy;
   function onStart(e) {
     var t = e.target.closest('.sticker');
     if (!t) return; e.preventDefault();
     dragEl = t; var rect = t.getBoundingClientRect();
     var pt = e.type === 'touchstart' ? e.touches[0] : e;
-    offsetX = pt.clientX - rect.left; offsetY = pt.clientY - rect.top;
+    ox = pt.clientX - rect.left; oy = pt.clientY - rect.top;
     t.style.position = 'fixed'; t.style.left = rect.left + 'px'; t.style.top = rect.top + 'px';
     t.style.width = rect.width + 'px'; t.style.zIndex = 999; t.style.transform = 'rotate(0deg) scale(1.05)';
     t.style.cursor = 'grabbing'; document.body.style.userSelect = 'none';
@@ -569,13 +623,13 @@ codersrank-summary {
   function onMove(e) {
     if (!dragEl) return; e.preventDefault();
     var pt = e.type === 'touchmove' ? e.touches[0] : e;
-    dragEl.style.left = (pt.clientX - offsetX) + 'px'; dragEl.style.top = (pt.clientY - offsetY) + 'px';
+    dragEl.style.left = (pt.clientX - ox) + 'px'; dragEl.style.top = (pt.clientY - oy) + 'px';
   }
   function onEnd() {
     if (!dragEl) return;
     dragEl.style.position = ''; dragEl.style.left = ''; dragEl.style.top = ''; dragEl.style.width = '';
     dragEl.style.zIndex = ''; dragEl.style.cursor = '';
-    dragEl.style.transform = 'rotate(' + (rotations[parseInt(dragEl.getAttribute('data-index')) % rotations.length]) + 'deg)';
+    dragEl.style.transform = 'rotate(' + r[parseInt(dragEl.getAttribute('data-index')) % r.length] + 'deg)';
     document.body.style.userSelect = ''; dragEl = null;
   }
   pile.addEventListener('mousedown', onStart);
@@ -584,6 +638,7 @@ codersrank-summary {
   document.addEventListener('touchmove', onMove, {passive: false}); document.addEventListener('touchend', onEnd);
 })();
 
+// === GitHub Calendar ===
 (function initGitHubCalendar() {
   function load() {
     if (typeof GitHubCalendar !== 'function') { setTimeout(load, 300); return; }
@@ -595,6 +650,7 @@ codersrank-summary {
   load();
 })();
 
+// === Mobile nav ===
 function openMobileNav() {
   document.getElementById('mobileNav').classList.add('open');
   document.getElementById('mobileOverlay').classList.remove('hidden');
@@ -606,6 +662,7 @@ function closeMobileNav() {
   document.body.style.overflow = '';
 }
 
+// === Active nav link tracking ===
 (function trackNav() {
   var links = document.querySelectorAll('.nav-link');
   var sections = [];
