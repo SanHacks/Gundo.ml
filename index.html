@@ -32,11 +32,12 @@ tailwind.config = {
 </script>
 
 <!-- CodersRank -->
-<script src="https://unpkg.com/@codersrank/work-experience@0.9.14/codersrank-work-experience.min.js" defer></script>
-<script src="https://unpkg.com/@codersrank/education@0.9.16/codersrank-education.min.js" defer></script>
-<script src="https://unpkg.com/@codersrank/portfolio@0.9.15/codersrank-portfolio.min.js" defer></script>
-<script src="https://unpkg.com/@codersrank/skills-chart@0.9.16/codersrank-skills-chart.min.js" defer></script>
-<script src="https://profile.codersrank.io/widget/widget.js" defer></script>
+<script src="https://unpkg.com/@codersrank/work-experience/codersrank-work-experience.min.js"></script>
+<script src="https://unpkg.com/@codersrank/education/codersrank-education.min.js"></script>
+<script src="https://unpkg.com/@codersrank/portfolio/codersrank-portfolio.min.js"></script>
+<script src="https://unpkg.com/@codersrank/activity/codersrank-activity.min.js"></script>
+<script src="https://unpkg.com/@codersrank/skills-chart/codersrank-skills-chart.min.js"></script>
+<script src="https://profile.codersrank.io/widget/widget.js"></script>
 
 <!-- GitHub Calendar -->
 <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js" defer></script>
@@ -49,14 +50,11 @@ tailwind.config = {
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#00FF66 #0E0F13}
 body{background:#0E0F13 radial-gradient(ellipse at 50% 0%,rgba(0,255,102,0.04),transparent 70%);color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100dvh}
-
-/* CRT scan-line overlay — subtle */
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,102,0.012) 2px,rgba(0,255,102,0.012) 4px)}
 
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:#0E0F13}
 ::-webkit-scrollbar-thumb{background:#00FF66;border-radius:3px;box-shadow:0 0 8px rgba(0,255,102,0.3)}
-
 ::selection{background:rgba(0,255,102,0.3);color:#0E0F13}
 
 .z-nav{z-index:50}
@@ -87,17 +85,14 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .section-heading{font-family:Space Grotesk,sans-serif;font-weight:600;font-size:2rem;text-wrap:balance;display:inline-block;position:relative;margin-bottom:2.5rem}
 .section-heading::after{content:'';position:absolute;bottom:-6px;left:0;width:36px;height:3px;background:#00FF66;border-radius:2px;box-shadow:0 0 12px rgba(0,255,102,0.5)}
 
-/* Terminal prompt decorator */
 .terminal-prefix{display:inline-flex;align-items:center;gap:8px;font-family:JetBrains Mono,monospace;font-size:.8rem;color:#00FF66;opacity:0.6}
 .terminal-prefix::before{content:'$';color:#00FF66}
 
-.sticker-pile{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:20px;max-width:640px;margin:0 auto}
-.sticker{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:9999px;font-family:JetBrains Mono,monospace;font-size:.8rem;border:1px solid rgba(242,238,233,0.1);background:rgba(14,15,19,0.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(242,238,233,0.8);cursor:grab;user-select:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s ease-out,border-color .25s ease-out;position:relative;touch-action:none}
+.sticker-pile{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:20px;max-width:680px;margin:0 auto}
+.sticker{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:9999px;font-family:JetBrains Mono,monospace;font-size:.8rem;border:1px solid rgba(242,238,233,0.1);background:rgba(14,15,19,0.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:rgba(242,238,233,0.8);cursor:grab;user-select:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s ease-out,border-color .25s ease-out;position:relative;touch-action:none}
 .sticker:hover{transform:translateY(-6px) scale(1.05) !important;box-shadow:0 12px 32px rgba(0,255,102,0.2);border-color:#00FF66;color:#F2EFE9}
 .sticker:active{cursor:grabbing}
-.sticker .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.sticker .dot.matrix{background:#00FF66}
-.sticker .dot.mint{background:#4DE8B0}
+.sticker img{width:14px;height:14px;flex-shrink:0;border-radius:0}
 
 .project-card{position:relative;border-radius:16px;border:1px solid rgba(242,238,233,0.06);background:rgba(242,238,233,0.015);overflow:hidden;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .3s ease-out;will-change:transform;perspective:600px;transform-style:preserve-3d}
 .project-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 20px 48px rgba(0,0,0,0.5),0 0 0 1px rgba(0,255,102,0.15)}
@@ -125,7 +120,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .exp-node:last-child{margin-bottom:0}
 .exp-node::before{content:'';position:absolute;left:-27px;top:26px;width:10px;height:10px;border-radius:50%;background:#00FF66;box-shadow:0 0 12px rgba(0,255,102,0.4)}
 
-/* Collapsible education */
+/* Collapsible */
 .ed-toggle{list-style:none;cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:10px;border:1px solid rgba(242,238,233,0.06);background:rgba(242,238,233,0.015);transition:border-color .2s ease-out}
 .ed-toggle::-webkit-details-marker{display:none}
 .ed-toggle:hover{border-color:rgba(0,255,102,0.2)}
@@ -156,7 +151,8 @@ codersrank-activity {
   --tag-bg: rgba(78,232,176,0.1);
   --tag-text: #4DE8B0;
   --tag-border: rgba(78,232,176,0.2);
-  background: transparent !important;
+  display: block;
+  width: 100%;
 }
 codersrank-summary {
   --avatar-size: 0;
@@ -166,6 +162,8 @@ codersrank-summary {
   --text: rgba(242,238,233,0.75);
   --text-secondary: rgba(242,238,233,0.45);
   --text-title: #F2EFE9;
+  display: block;
+  width: 100%;
 }
 
 /* GitHub Calendar dark theme */
@@ -255,7 +253,7 @@ codersrank-summary {
         <h1 class="stagger-item font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-offwhite leading-tight text-balance mb-3" data-delay="100">Gundo Sifhufhi</h1>
         <p class="stagger-item font-mono text-sm text-matrix/60 mb-2" data-delay="175"><span class="text-matrix/40">$</span> whoami</p>
         <p class="stagger-item font-display text-lg sm:text-xl text-offwhite/60 mb-2 text-balance" data-delay="200">Software Developer</p>
-        <p class="stagger-item text-offwhite/40 text-base max-w-lg text-pretty mb-8 mx-auto md:mx-0 font-mono text-sm" data-delay="300"><span class="text-matrix/40">$</span> echo "South African dev building cool stuff — backend by trade, tinkerer by nature."</p>
+        <p class="stagger-item text-offwhite/40 text-base max-w-lg text-pretty mb-8 mx-auto md:mx-0 font-mono text-sm" data-delay="300"><span class="text-matrix/40">$</span> echo "building cool stuff in South Africa"</p>
         <div class="stagger-item flex items-center gap-4 justify-center md:justify-start" data-delay="400">
           <a href="#contact" class="magnetic-btn" data-strength="8">
             <span class="btn-text">Get in touch</span>
@@ -291,32 +289,27 @@ codersrank-summary {
     <p class="reveal text-offwhite/40 text-sm font-mono mb-8" style="transition-delay:80ms">// stickers on my laptop lid</p>
     <div class="reveal sticker-pile" id="stickerPile" style="transition-delay:150ms"></div>
     <div class="reveal max-w-xl mx-auto mt-12" style="transition-delay:250ms">
-      <div class="widget-card">
-        <codersrank-skills-chart
-          username="sanhacks"
-          legend
-          tooltip
-          :labels="true"
-          :responsive="true"
-        ></codersrank-skills-chart>
+      <div class="widget-card py-6">
+        <h3 class="font-display font-semibold text-offwhite text-base mb-4 text-left">Skill breakdown</h3>
+        <codersrank-skills-chart username="sanhacks" legend tooltip :labels="true" :responsive="true"></codersrank-skills-chart>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Experience + Education -->
+<!-- Experience -->
 <section id="experience" class="px-6 py-20 md:py-28 relative">
   <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(0,255,102,0.025)_0%,transparent_60%)] pointer-events-none"></div>
   <div class="max-w-3xl mx-auto relative z-content">
     <p class="terminal-prefix mb-3">experience</p>
     <h2 class="section-heading reveal">Experience</h2>
 
-    <!-- Timeline -->
+    <!-- Static highlight -->
     <div class="reveal exp-timeline mt-10" style="transition-delay:80ms">
       <div class="exp-node">
         <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2">
           <h3 class="font-display font-semibold text-lg text-offwhite">Backend Developer</h3>
-          <span class="bg-matrix/10 text-matrix font-mono text-xs px-2.5 py-0.5 rounded-full border border-matrix/20">Current</span>
+          <span class="text-[11px] bg-matrix/10 text-matrix font-mono px-2.5 py-0.5 rounded-full border border-matrix/20">Current</span>
         </div>
         <p class="text-matrix/50 font-mono text-xs mb-2">Vaimo &mdash; 2025 &ndash; Present</p>
         <p class="text-offwhite/60 text-sm leading-relaxed text-pretty">Backend systems for enterprise e-commerce. PHP, Magento, modern web services, API design.</p>
@@ -325,25 +318,32 @@ codersrank-summary {
           <span class="tag">Magento</span>
           <span class="tag">MySQL</span>
           <span class="tag">REST APIs</span>
+          <span class="tag">Git</span>
         </div>
       </div>
     </div>
 
-    <!-- CodersRank full experience widget -->
-    <div class="reveal mt-8" style="transition-delay:140ms">
+    <!-- Full history from CodersRank -->
+    <div class="reveal mt-10" style="transition-delay:140ms">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="text-offwhite/30 font-mono text-xs">Full history</span>
+        <span class="flex-1 h-px bg-white/[.06]"></span>
+      </div>
       <div class="widget-card">
-        <codersrank-work-experience username="sanhacks" logos></codersrank-work-experience>
+        <codersrank-work-experience username="sanhacks" logos branding="false"></codersrank-work-experience>
       </div>
     </div>
 
     <!-- Education collapsible -->
-    <div class="reveal mt-8" style="transition-delay:200ms">
+    <div class="reveal mt-10" style="transition-delay:200ms">
       <details>
-        <summary class="ed-toggle font-display font-semibold text-offwhite text-lg">
-          <span>Education</span>
+        <summary class="ed-toggle">
+          <span class="font-display font-semibold text-offwhite text-lg">Education</span>
         </summary>
         <div class="ed-body">
-          <codersrank-education username="sanhacks"></codersrank-education>
+          <div class="widget-card">
+            <codersrank-education username="sanhacks"></codersrank-education>
+          </div>
         </div>
       </details>
     </div>
@@ -362,10 +362,7 @@ codersrank-summary {
         <div class="p-5">
           <h3 class="font-display font-semibold text-offwhite text-lg mb-1">Nile</h3>
           <p class="text-offwhite/40 text-sm mb-3 text-pretty">Full-stack application</p>
-          <div class="flex gap-2 flex-wrap">
-            <span class="tag">PHP</span>
-            <span class="tag">Laravel</span>
-          </div>
+          <div class="flex gap-2 flex-wrap"><span class="tag">PHP</span><span class="tag">Laravel</span></div>
         </div>
       </div>
       <div class="project-card reveal" data-tilt style="transition-delay:100ms">
@@ -373,10 +370,7 @@ codersrank-summary {
         <div class="p-5">
           <h3 class="font-display font-semibold text-offwhite text-lg mb-1">Fill The Gaps</h3>
           <p class="text-offwhite/40 text-sm mb-3 text-pretty">Community platform</p>
-          <div class="flex gap-2 flex-wrap">
-            <span class="tag">PHP</span>
-            <span class="tag">MySQL</span>
-          </div>
+          <div class="flex gap-2 flex-wrap"><span class="tag">PHP</span><span class="tag">MySQL</span></div>
         </div>
       </div>
       <div class="project-card reveal" data-tilt style="transition-delay:150ms">
@@ -384,10 +378,7 @@ codersrank-summary {
         <div class="p-5">
           <h3 class="font-display font-semibold text-offwhite text-lg mb-1">Sage ChatGPT3 AI</h3>
           <p class="text-offwhite/40 text-sm mb-3 text-pretty">AI-powered assistant</p>
-          <div class="flex gap-2 flex-wrap">
-            <span class="tag">Python</span>
-            <span class="tag">OpenAI</span>
-          </div>
+          <div class="flex gap-2 flex-wrap"><span class="tag">Python</span><span class="tag">OpenAI</span></div>
         </div>
       </div>
     </div>
@@ -405,13 +396,14 @@ codersrank-summary {
         <p class="text-offwhite/40 font-mono text-sm text-center py-8">Loading contribution data...</p>
       </div>
     </div>
-    <div class="reveal flex justify-center mt-6" style="transition-delay:180ms">
+    <div class="reveal flex items-center justify-center gap-6 mt-6" style="transition-delay:180ms">
       <iframe src="https://ghbtns.com/github-btn.html?user=sanhacks&type=follow&count=true" frameborder="0" scrolling="0" width="180" height="24" class="opacity-50 hover:opacity-100 transition-opacity"></iframe>
+      <a href="https://github.com/sanhacks" target="_blank" rel="noopener" class="text-offwhite/30 hover:text-matrix transition-colors font-mono text-xs">github.com/sanhacks →</a>
     </div>
   </div>
 </section>
 
-<!-- Stats -->
+<!-- Stats + Portfolio -->
 <section id="stats" class="px-6 py-20 md:py-28 bg-white/[.015] relative">
   <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,102,0.015)_0%,transparent_60%)] pointer-events-none"></div>
   <div class="max-w-5xl mx-auto relative z-content">
@@ -419,12 +411,17 @@ codersrank-summary {
     <h2 class="section-heading reveal">Stats</h2>
     <div class="grid md:grid-cols-2 gap-6 mt-10">
       <div class="reveal widget-card" style="transition-delay:50ms">
+        <h3 class="font-display font-semibold text-offwhite text-base mb-4">Summary</h3>
         <codersrank-summary username="sanhacks"></codersrank-summary>
       </div>
       <div class="reveal widget-card" style="transition-delay:100ms">
-        <h3 class="font-display font-semibold text-lg text-offwhite mb-4">Portfolio</h3>
+        <h3 class="font-display font-semibold text-offwhite text-base mb-4">Portfolio</h3>
         <codersrank-portfolio username="sanhacks" logos></codersrank-portfolio>
       </div>
+    </div>
+    <div class="reveal mt-8 widget-card" style="transition-delay:150ms">
+      <h3 class="font-display font-semibold text-offwhite text-base mb-4">Activity</h3>
+      <codersrank-activity username="sanhacks"></codersrank-activity>
     </div>
   </div>
 </section>
@@ -437,21 +434,11 @@ codersrank-summary {
     <h2 class="section-heading reveal">Contact</h2>
     <p class="reveal text-offwhite/40 mb-10 text-pretty font-mono text-sm" style="transition-delay:80ms"><span class="text-matrix/40">$</span> echo "Let's build something cool together"</p>
     <div class="reveal flex flex-wrap justify-center gap-4 mb-12" style="transition-delay:150ms">
-      <a href="mailto:sifhufhisg@gmail.com" class="magnetic-btn" data-strength="6">
-        <span class="btn-text font-mono text-sm">Email</span>
-      </a>
-      <a href="https://github.com/sanhacks" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6">
-        <span class="btn-text font-mono text-sm">GitHub</span>
-      </a>
-      <a href="https://twitter.com/sanhacks" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6">
-        <span class="btn-text font-mono text-sm">Twitter</span>
-      </a>
-      <a href="https://telegram.me/gundosifhufhi" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6">
-        <span class="btn-text font-mono text-sm">Telegram</span>
-      </a>
-      <a href="https://codersrank.io/user/sanhacks" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6">
-        <span class="btn-text font-mono text-sm">CodersRank</span>
-      </a>
+      <a href="mailto:sifhufhisg@gmail.com" class="magnetic-btn" data-strength="6"><span class="btn-text font-mono text-sm">Email</span></a>
+      <a href="https://github.com/sanhacks" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6"><span class="btn-text font-mono text-sm">GitHub</span></a>
+      <a href="https://twitter.com/sanhacks" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6"><span class="btn-text font-mono text-sm">Twitter</span></a>
+      <a href="https://telegram.me/gundosifhufhi" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6"><span class="btn-text font-mono text-sm">Telegram</span></a>
+      <a href="https://codersrank.io/user/sanhacks" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6"><span class="btn-text font-mono text-sm">CodersRank</span></a>
     </div>
   </div>
 </section>
@@ -493,17 +480,14 @@ codersrank-summary {
 (function avatarTilt() {
   var wrap = document.getElementById('avatarTilt');
   if (!wrap) return;
-  var inner = wrap.querySelector('.tilt-inner');
-  var maxTilt = 10;
-  function handleMove(e) {
+  var inner = wrap.querySelector('.tilt-inner'), maxTilt = 10;
+  wrap.addEventListener('mousemove', function(e) {
     var rect = wrap.getBoundingClientRect();
     var x = e.clientX - rect.left, y = e.clientY - rect.top;
     var midX = rect.width / 2, midY = rect.height / 2;
     inner.style.transform = 'rotateX(' + ((midY - y) / midY * maxTilt) + 'deg) rotateY(' + ((x - midX) / midX * maxTilt) + 'deg)';
-  }
-  function handleLeave() { inner.style.transform = 'rotateX(0deg) rotateY(0deg)'; }
-  wrap.addEventListener('mousemove', handleMove);
-  wrap.addEventListener('mouseleave', handleLeave);
+  });
+  wrap.addEventListener('mouseleave', function() { inner.style.transform = 'rotateX(0deg) rotateY(0deg)'; });
 })();
 
 (function projectTilt() {
@@ -511,8 +495,8 @@ codersrank-summary {
   cards.forEach(function(card) {
     card.addEventListener('mousemove', function(e) {
       var rect = card.getBoundingClientRect();
-      var x = e.clientX - rect.left, y = e.clientY - rect.top;
-      var midX = rect.width / 2, midY = rect.height / 2, s = 6;
+      var x = e.clientX - rect.left, y = e.clientY - rect.top, s = 6;
+      var midX = rect.width / 2, midY = rect.height / 2;
       card.style.transform = 'perspective(600px) rotateX(' + ((midY - y) / midY * s) + 'deg) rotateY(' + ((x - midX) / midX * s) + 'deg) translateY(-4px)';
     });
     card.addEventListener('mouseleave', function() {
@@ -540,20 +524,35 @@ codersrank-summary {
   var pile = document.getElementById('stickerPile');
   if (!pile) return;
   var stack = [
-    { label: 'PHP', c: 'matrix' }, { label: 'Python', c: 'mint' }, { label: 'JavaScript', c: 'matrix' }, { label: 'TypeScript', c: 'mint' },
-    { label: 'Laravel', c: 'matrix' }, { label: 'Symfony', c: 'mint' }, { label: 'React', c: 'matrix' }, { label: 'MySQL', c: 'mint' },
-    { label: 'PostgreSQL', c: 'matrix' }, { label: 'Redis', c: 'mint' }, { label: 'Docker', c: 'matrix' }, { label: 'Linux', c: 'mint' },
-    { label: 'Git', c: 'matrix' }, { label: 'AWS', c: 'mint' }, { label: 'HTML/CSS', c: 'matrix' }, { label: 'Tailwind', c: 'mint' },
-    { label: 'Composer', c: 'matrix' }, { label: 'Nginx', c: 'mint' }, { label: 'Magento', c: 'matrix' }, { label: 'REST APIs', c: 'mint' },
+    { label: 'PHP', icon: 'php', color: 'matrix' },
+    { label: 'Python', icon: 'python', color: 'mint' },
+    { label: 'JavaScript', icon: 'javascript', color: 'matrix' },
+    { label: 'TypeScript', icon: 'typescript', color: 'mint' },
+    { label: 'Laravel', icon: 'laravel', color: 'matrix' },
+    { label: 'Symfony', icon: 'symfony', color: 'mint' },
+    { label: 'React', icon: 'react', color: 'matrix' },
+    { label: 'MySQL', icon: 'mysql', color: 'mint' },
+    { label: 'PostgreSQL', icon: 'postgresql', color: 'matrix' },
+    { label: 'Redis', icon: 'redis', color: 'mint' },
+    { label: 'Docker', icon: 'docker', color: 'matrix' },
+    { label: 'Linux', icon: 'linux', color: 'mint' },
+    { label: 'Git', icon: 'git', color: 'matrix' },
+    { label: 'AWS', icon: 'amazonwebservices', color: 'mint' },
+    { label: 'HTML', icon: 'html5', color: 'matrix' },
+    { label: 'Tailwind', icon: 'tailwindcss', color: 'mint' },
+    { label: 'Composer', icon: 'composer', color: 'matrix' },
+    { label: 'Nginx', icon: 'nginx', color: 'mint' },
+    { label: 'Magento', icon: 'magento', color: 'matrix' },
+    { label: 'REST', icon: 'postman', color: 'mint' },
   ];
   var rotations = [-3, 2, -5, 4, -2, 6, -4, 3, -6, 5, -3, 2, -4, 5, -2, 3, -5, 4, -6, 3];
+  var hex = { matrix: '00FF66', mint: '4DE8B0' };
   stack.forEach(function(item, i) {
     var el = document.createElement('div');
     el.className = 'sticker';
     el.setAttribute('data-index', i);
-    var rot = rotations[i % rotations.length];
-    el.style.transform = 'rotate(' + rot + 'deg)';
-    el.innerHTML = '<span class="dot ' + item.c + '"></span>' + item.label;
+    el.style.transform = 'rotate(' + (rotations[i % rotations.length]) + 'deg)';
+    el.innerHTML = '<img src="https://cdn.simpleicons.org/' + item.icon + '/' + hex[item.color] + '" alt="" width="14" height="14" loading="lazy" />' + item.label;
     pile.appendChild(el);
   });
   var dragEl = null, offsetX, offsetY;
@@ -576,8 +575,7 @@ codersrank-summary {
     if (!dragEl) return;
     dragEl.style.position = ''; dragEl.style.left = ''; dragEl.style.top = ''; dragEl.style.width = '';
     dragEl.style.zIndex = ''; dragEl.style.cursor = '';
-    var rot = rotations[parseInt(dragEl.getAttribute('data-index')) % rotations.length];
-    dragEl.style.transform = 'rotate(' + rot + 'deg)';
+    dragEl.style.transform = 'rotate(' + (rotations[parseInt(dragEl.getAttribute('data-index')) % rotations.length]) + 'deg)';
     document.body.style.userSelect = ''; dragEl = null;
   }
   pile.addEventListener('mousedown', onStart);
@@ -587,21 +585,14 @@ codersrank-summary {
 })();
 
 (function initGitHubCalendar() {
-  if (typeof GitHubCalendar !== 'function') {
-    var check = setInterval(function() {
-      if (typeof GitHubCalendar === 'function') {
-        clearInterval(check);
-        try { GitHubCalendar('#githubCalendar', 'sanhacks', { responsive: true, tooltips: true });
-          var l = document.querySelector('#githubCalendar p'); if (l) l.remove();
-        } catch(e) { console.warn('GitHubCalendar:', e); }
-      }
-    }, 300);
-    setTimeout(function() { clearInterval(check); }, 15000);
-  } else {
-    try { GitHubCalendar('#githubCalendar', 'sanhacks', { responsive: true, tooltips: true });
+  function load() {
+    if (typeof GitHubCalendar !== 'function') { setTimeout(load, 300); return; }
+    try {
+      GitHubCalendar('#githubCalendar', 'sanhacks', { responsive: true, tooltips: true });
       var l = document.querySelector('#githubCalendar p'); if (l) l.remove();
     } catch(e) { console.warn('GitHubCalendar:', e); }
   }
+  load();
 })();
 
 function openMobileNav() {
