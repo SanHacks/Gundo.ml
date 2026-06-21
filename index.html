@@ -31,6 +31,20 @@ tailwind.config = {
 };
 </script>
 
+<!-- CodersRank -->
+<script src="https://unpkg.com/@codersrank/work-experience@0.9.14/codersrank-work-experience.min.js" defer></script>
+<script src="https://unpkg.com/@codersrank/education@0.9.16/codersrank-education.min.js" defer></script>
+<script src="https://unpkg.com/@codersrank/portfolio@0.9.15/codersrank-portfolio.min.js" defer></script>
+<script src="https://unpkg.com/@codersrank/skills-chart@0.9.16/codersrank-skills-chart.min.js" defer></script>
+<script src="https://profile.codersrank.io/widget/widget.js" defer></script>
+
+<!-- GitHub Calendar -->
+<script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js" defer></script>
+<link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css" />
+
+<!-- Twitter -->
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#FF7A45 #13151A}
@@ -91,9 +105,6 @@ body{background:#13151A;color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-
 .experience-line{position:relative;padding-left:28px;border-left:1px solid rgba(242,238,233,0.1)}
 .experience-line:last-child{border-color:transparent}
 
-.glitch-hover{position:relative;display:inline-block}
-.glitch-hover:hover{color:#FF7A45}
-
 .tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:6px;font-family:JetBrains Mono,monospace;font-size:.75rem;border:1px solid rgba(78,232,176,0.2);background:rgba(78,232,176,0.06);color:#4DE8B0}
 
 .nav-blur{background:rgba(19,21,26,0.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(242,238,233,0.06)}
@@ -102,6 +113,58 @@ body{background:#13151A;color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-
 .mobile-nav.open{transform:translateX(0)}
 .mobile-nav a{display:block;padding:12px 0;color:rgba(242,238,233,0.7);font-family:Space Grotesk,sans-serif;font-size:1.25rem;border-bottom:1px solid rgba(242,238,233,0.06);transition:color .2s ease-out}
 .mobile-nav a:hover{color:#F2EFE9}
+
+/* --- Widget theming --- */
+codersrank-work-experience,
+codersrank-education,
+codersrank-portfolio,
+codersrank-skills-chart,
+codersrank-activity {
+  --badge-bg: rgba(255,122,69,0.15);
+  --badge-text: #FF7A45;
+  --badge-border: rgba(255,122,69,0.3);
+  --bg: transparent;
+  --card-bg: rgba(242,238,233,0.03);
+  --card-border: rgba(242,238,233,0.08);
+  --text: rgba(242,238,233,0.75);
+  --text-secondary: rgba(242,238,233,0.45);
+  --text-title: #F2EFE9;
+  --timeline-color: #FF7A45;
+  --progress-bg: rgba(242,238,233,0.08);
+  --progress-fg: linear-gradient(135deg, #FF7A45, #4DE8B0);
+  --star-color: #FF7A45;
+  --tag-bg: rgba(78,232,176,0.1);
+  --tag-text: #4DE8B0;
+  --tag-border: rgba(78,232,176,0.2);
+  background: transparent !important;
+}
+codersrank-summary {
+  --avatar-size: 0;
+  --badge-bg: rgba(255,122,69,0.15);
+  --badge-text: #FF7A45;
+  --bg: transparent;
+  --text: rgba(242,238,233,0.75);
+  --text-secondary: rgba(242,238,233,0.45);
+  --text-title: #F2EFE9;
+}
+
+/* GitHub Calendar dark theme */
+.github-calendar { background: transparent !important; border: none !important; }
+.github-calendar .calendar { background: transparent !important; border: none !important; }
+.github-calendar .calendar img { display: none; }
+.github-calendar .calendar .contrib-column { color: rgba(242,238,233,0.5) !important; font-family: JetBrains Mono, monospace !important; font-size: .75rem !important; }
+.github-calendar .calendar .contrib-column .text-muted { color: rgba(242,238,233,0.3) !important; }
+.github-calendar .calendar h2 { color: #F2EFE9 !important; font-family: Space Grotesk, sans-serif !important; font-weight: 600 !important; }
+.calendar .graph { padding: 0 !important; }
+.calendar .legend { color: rgba(242,238,233,0.4) !important; font-family: JetBrains Mono, monospace !important; font-size: .7rem !important; }
+.ContributionCalendar-day[data-level="0"] { fill: rgba(242,238,233,0.06) !important; }
+.ContributionCalendar-day[data-level="1"] { fill: rgba(255,122,69,0.25) !important; }
+.ContributionCalendar-day[data-level="2"] { fill: rgba(255,122,69,0.45) !important; }
+.ContributionCalendar-day[data-level="3"] { fill: rgba(255,122,69,0.65) !important; }
+.ContributionCalendar-day[data-level="4"] { fill: #FF7A45 !important; }
+
+/* Widget container */
+.widget-card { border-radius: 12px; border: 1px solid rgba(242,238,233,0.06); background: rgba(242,238,233,0.015); padding: 24px; }
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
@@ -135,6 +198,7 @@ body{background:#13151A;color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-
   <a href="#techstack" onclick="closeMobileNav()">Tech Stack</a>
   <a href="#experience" onclick="closeMobileNav()">Experience</a>
   <a href="#projects" onclick="closeMobileNav()">Projects</a>
+  <a href="#github" onclick="closeMobileNav()">GitHub</a>
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
 </nav>
 
@@ -147,6 +211,7 @@ body{background:#13151A;color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-
       <a href="#techstack" class="nav-link font-mono text-sm">Tech Stack</a>
       <a href="#experience" class="nav-link font-mono text-sm">Experience</a>
       <a href="#projects" class="nav-link font-mono text-sm">Projects</a>
+      <a href="#github" class="nav-link font-mono text-sm">GitHub</a>
       <a href="#contact" class="nav-link font-mono text-sm">Contact</a>
     </div>
     <button onclick="openMobileNav()" class="md:hidden text-offwhite/70 hover:text-offwhite transition-colors p-2" aria-label="Open navigation">
@@ -205,25 +270,36 @@ body{background:#13151A;color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-
     <div class="reveal sticker-pile" id="stickerPile" style="transition-delay:150ms">
       <!-- Injected by JS -->
     </div>
+    <!-- CodersRank Skills Chart -->
+    <div class="reveal max-w-xl mx-auto mt-12" style="transition-delay:250ms">
+      <div class="widget-card">
+        <codersrank-skills-chart
+          username="sanhacks"
+          legend
+          tooltip
+          :labels="true"
+          :responsive="true"
+        ></codersrank-skills-chart>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- Experience -->
+<!-- Experience + Education -->
 <section id="experience" class="px-6 py-20 md:py-28">
   <div class="max-w-3xl mx-auto">
     <h2 class="section-heading reveal">Experience</h2>
-    <div class="reveal mt-8 space-y-10" style="transition-delay:100ms">
-      <div class="experience-line">
-        <div class="experience-dot"></div>
-        <div>
-          <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1">
-            <h3 class="font-display font-semibold text-lg text-offwhite">Backend Developer</h3>
-            <span class="text-amber font-mono text-sm">Vaimo</span>
-          </div>
-          <p class="text-offwhite/40 font-mono text-xs mb-2">Present</p>
-          <p class="text-offwhite/65 text-sm leading-relaxed text-pretty">Building and maintaining backend systems for enterprise e-commerce. PHP, Magento, modern web services.</p>
-        </div>
-      </div>
+    <div class="reveal widget-card mb-10" style="transition-delay:100ms">
+      <codersrank-work-experience
+        username="sanhacks"
+        logos
+      ></codersrank-work-experience>
+    </div>
+    <div class="reveal widget-card" style="transition-delay:180ms">
+      <h3 class="font-display font-semibold text-lg text-offwhite mb-4">Education</h3>
+      <codersrank-education
+        username="sanhacks"
+      ></codersrank-education>
     </div>
   </div>
 </section>
@@ -270,12 +346,43 @@ body{background:#13151A;color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-
   </div>
 </section>
 
+<!-- GitHub Activity -->
+<section id="github" class="px-6 py-20 md:py-28">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="section-heading reveal">GitHub</h2>
+    <div class="reveal widget-card" style="transition-delay:100ms">
+      <div class="calendar" id="githubCalendar">
+        <p class="text-offwhite/40 font-mono text-sm text-center py-8">Loading contribution data...</p>
+      </div>
+    </div>
+    <div class="reveal flex justify-center mt-6" style="transition-delay:180ms">
+      <iframe src="https://ghbtns.com/github-btn.html?user=sanhacks&type=follow&count=true" frameborder="0" scrolling="0" width="180" height="24" class="opacity-60 hover:opacity-100 transition-opacity"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- CodersRank Summary & Portfolio -->
+<section id="stats" class="px-6 py-20 md:py-28 bg-white/[.015]">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="section-heading reveal">Stats</h2>
+    <div class="grid md:grid-cols-2 gap-6 mt-10">
+      <div class="reveal widget-card" style="transition-delay:50ms">
+        <codersrank-summary username="sanhacks"></codersrank-summary>
+      </div>
+      <div class="reveal widget-card" style="transition-delay:100ms">
+        <h3 class="font-display font-semibold text-lg text-offwhite mb-4">Portfolio</h3>
+        <codersrank-portfolio username="sanhacks" logos></codersrank-portfolio>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Contact -->
 <section id="contact" class="px-6 py-20 md:py-28">
   <div class="max-w-3xl mx-auto text-center">
     <h2 class="section-heading reveal">Contact</h2>
     <p class="reveal text-offwhite/50 mb-10 text-pretty" style="transition-delay:80ms">Let's build something cool together</p>
-    <div class="reveal flex flex-wrap justify-center gap-4" style="transition-delay:150ms">
+    <div class="reveal flex flex-wrap justify-center gap-4 mb-12" style="transition-delay:150ms">
       <a href="mailto:sifhufhisg@gmail.com" class="magnetic-btn" data-strength="6">
         <span class="btn-text font-mono text-sm">Email</span>
       </a>
@@ -287,6 +394,9 @@ body{background:#13151A;color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-
       </a>
       <a href="https://telegram.me/gundosifhufhi" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6">
         <span class="btn-text font-mono text-sm">Telegram</span>
+      </a>
+      <a href="https://codersrank.io/user/sanhacks" target="_blank" rel="noopener" class="magnetic-btn" data-strength="6">
+        <span class="btn-text font-mono text-sm">CodersRank</span>
       </a>
     </div>
   </div>
@@ -428,8 +538,7 @@ body{background:#13151A;color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-
     pile.appendChild(el);
   });
 
-  // Dragging
-  var dragEl = null, offsetX, offsetY, startX, startY;
+  var dragEl = null, offsetX, offsetY;
   function onStart(e) {
     var t = e.target.closest('.sticker');
     if (!t) return;
@@ -439,11 +548,9 @@ body{background:#13151A;color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-
     var pt = e.type === 'touchstart' ? e.touches[0] : e;
     offsetX = pt.clientX - rect.left;
     offsetY = pt.clientY - rect.top;
-    startX = rect.left;
-    startY = rect.top;
     t.style.position = 'fixed';
-    t.style.left = startX + 'px';
-    t.style.top = startY + 'px';
+    t.style.left = rect.left + 'px';
+    t.style.top = rect.top + 'px';
     t.style.width = rect.width + 'px';
     t.style.zIndex = 999;
     t.style.transform = 'rotate(0deg) scale(1.05)';
@@ -476,6 +583,29 @@ body{background:#13151A;color:#F2EFE9;font-family:Inter,sans-serif;-webkit-font-
   pile.addEventListener('touchstart', onStart, {passive: false});
   document.addEventListener('touchmove', onMove, {passive: false});
   document.addEventListener('touchend', onEnd);
+})();
+
+// === GitHub Calendar ===
+(function initGitHubCalendar() {
+  if (typeof GitHubCalendar !== 'function') {
+    var check = setInterval(function() {
+      if (typeof GitHubCalendar === 'function') {
+        clearInterval(check);
+        try {
+          GitHubCalendar('#githubCalendar', 'sanhacks', { responsive: true, tooltips: true });
+          var loading = document.querySelector('#githubCalendar p');
+          if (loading) loading.remove();
+        } catch(e) { console.warn('GitHubCalendar init:', e); }
+      }
+    }, 300);
+    setTimeout(function() { clearInterval(check); }, 15000);
+  } else {
+    try {
+      GitHubCalendar('#githubCalendar', 'sanhacks', { responsive: true, tooltips: true });
+      var loading = document.querySelector('#githubCalendar p');
+      if (loading) loading.remove();
+    } catch(e) { console.warn('GitHubCalendar init:', e); }
+  }
 })();
 
 // === Mobile nav ===
