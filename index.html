@@ -216,6 +216,22 @@ codersrank-summary {
 
 .widget-card { border-radius: 12px; border: 1px solid var(--surface-border); background: var(--surface-bg); padding: 24px; }
 
+/* Hide CodersRank branding */
+codersrank-summary,
+codersrank-work-experience,
+codersrank-education,
+codersrank-portfolio,
+codersrank-skills-chart,
+codersrank-activity {
+  --branding-display: none;
+}
+
+/* Scroll-to-top */
+.scroll-top{position:fixed;bottom:28px;right:28px;z-index:40;width:44px;height:44px;border-radius:9999px;border:1px solid var(--surface-border);background:rgba(var(--color-ink)/0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .25s ease-out,transform .25s ease-out,color .2s ease-out,border-color .2s ease-out;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
+.scroll-top.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.scroll-top:hover{color:rgb(var(--color-matrix));border-color:rgba(var(--color-matrix)/0.3)}
+.scroll-top svg{width:20px;height:20px}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   .reveal{opacity:1;transform:none}
@@ -276,9 +292,11 @@ codersrank-summary {
   </div>
 </nav>
 
+<canvas id="matrixRain" class="fixed inset-0 w-full h-full pointer-events-none z-0" style="opacity:0.12"></canvas>
+
 <!-- Hero -->
-<section id="hero" class="min-h-dvh flex items-center pt-24 pb-16 px-6">
-  <div class="max-w-5xl mx-auto w-full">
+<section id="hero" class="min-h-dvh flex items-center pt-24 pb-16 px-6 relative overflow-hidden">
+  <div class="max-w-5xl mx-auto w-full relative z-content">
     <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16">
       <div class="tilt-wrap flex-shrink-0" id="avatarTilt">
         <div class="tilt-inner">
@@ -330,7 +348,7 @@ codersrank-summary {
     <div class="reveal max-w-xl mx-auto mt-12" style="transition-delay:250ms">
       <div class="widget-card py-6">
         <h3 class="font-display font-semibold text-offwhite text-base mb-4 text-left">Skill breakdown</h3>
-        <codersrank-skills-chart username="sanhacks" legend tooltip :labels="true" :responsive="true"></codersrank-skills-chart>
+        <codersrank-skills-chart username="sanhacks" legend tooltip labels responsive></codersrank-skills-chart>
       </div>
     </div>
   </div>
@@ -445,14 +463,18 @@ codersrank-summary {
   <div class="max-w-5xl mx-auto relative z-content">
     <p class="terminal-prefix mb-3">stats</p>
     <h2 class="section-heading reveal">Stats</h2>
-    <div class="grid md:grid-cols-2 gap-6 mt-10">
-      <div class="reveal widget-card" style="transition-delay:50ms">
-        <h3 class="font-display font-semibold text-offwhite text-base mb-4">Summary</h3>
-        <codersrank-summary username="sanhacks"></codersrank-summary>
+    <div class="grid md:grid-cols-[1fr_2fr] gap-6 mt-10 items-stretch">
+      <div class="reveal widget-card flex flex-col" style="transition-delay:50ms">
+        <h3 class="font-display font-semibold text-offwhite text-base mb-4 flex-none">Summary</h3>
+        <div class="flex-1 min-w-0">
+          <codersrank-summary username="sanhacks" branding="false"></codersrank-summary>
+        </div>
       </div>
-      <div class="reveal widget-card" style="transition-delay:100ms">
-        <h3 class="font-display font-semibold text-offwhite text-base mb-4">Portfolio</h3>
-        <codersrank-portfolio username="sanhacks" logos></codersrank-portfolio>
+      <div class="reveal widget-card flex flex-col" style="transition-delay:100ms">
+        <h3 class="font-display font-semibold text-offwhite text-base mb-4 flex-none">Portfolio</h3>
+        <div class="flex-1 min-w-0">
+          <codersrank-portfolio username="sanhacks" max-items="4"></codersrank-portfolio>
+        </div>
       </div>
     </div>
     <div class="reveal mt-8 widget-card" style="transition-delay:150ms">
@@ -487,7 +509,128 @@ codersrank-summary {
   </div>
 </footer>
 
+<button id="scrollTop" class="scroll-top" aria-label="Scroll to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
 <script>
+// === Matrix rain with messages ===
+(function matrixRain() {
+  var canvas = document.getElementById('matrixRain');
+  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ctx = canvas.getContext('2d');
+  var fontSize = 14, cols, drops = {};
+
+  var msgs = [
+    'BUILD COOL STUFF',
+    'BACKEND DEVELOPER',
+    'PHP PYTHON GO',
+    'CODE & CREATE',
+    'SOUTH AFRICA',
+    'GUNDO SIFHUFHI',
+    'PROBLEM SOLVER',
+    'FULL STACK DEV',
+  ];
+
+  var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+  var msgIdx = 0, msgCol = 0, msgRow = -20, msgActive = false, msgPause = 0;
+  var currentMsg = '', dir = 1;
+
+  function fade() {
+    return document.documentElement.getAttribute('data-theme') === 'light' ? '245,243,239' : '14,15,19';
+  }
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    cols = Math.floor(canvas.width / fontSize);
+    for (var i = 0; i < cols; i++) {
+      if (!drops[i]) drops[i] = Math.floor(Math.random() * -canvas.height / fontSize);
+    }
+    if (msgCol + currentMsg.length >= cols) { msgCol = cols - currentMsg.length - 2; if (msgCol < 0) msgCol = 0; }
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  var obs = new MutationObserver(function() { /* fadeColor refreshes each frame */ });
+  obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  function nextMsg() {
+    currentMsg = msgs[msgIdx % msgs.length];
+    msgIdx++;
+    msgCol = Math.floor(Math.random() * Math.max(1, cols - currentMsg.length - 2));
+    msgRow = -2;
+    msgActive = true;
+    msgPause = 0;
+  }
+
+  function draw() {
+    var f = fade();
+    ctx.fillStyle = 'rgba(' + f + ',0.055)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = fontSize + 'px monospace';
+    ctx.textBaseline = 'top';
+
+    // Normal rain
+    for (var i = 0; i < cols; i++) {
+      var c = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillStyle = '#00FF66';
+      ctx.globalAlpha = 0.2 + Math.random() * 0.25;
+      ctx.fillText(c, i * fontSize, drops[i] * fontSize);
+      ctx.globalAlpha = 1;
+      if (drops[i] * fontSize > canvas.height + 20 && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+
+    // Message logic
+    if (msgPause > 0) { msgPause--; }
+    else if (!msgActive) {
+      if (Math.random() < 0.008) nextMsg();
+    } else {
+      var fullyVisible = true;
+      for (var j = 0; j < currentMsg.length; j++) {
+        var col = msgCol + j;
+        if (col >= cols) break;
+        var row = msgRow;
+        var ch = currentMsg[j];
+        if (ch === ' ') continue;
+        if (row >= 0 && row * fontSize < canvas.height) {
+          ctx.globalAlpha = 0.85 + Math.random() * 0.15;
+          ctx.fillStyle = '#00FF66';
+          ctx.fillText(ch, col * fontSize, row * fontSize);
+          ctx.globalAlpha = 1;
+        } else {
+          fullyVisible = false;
+        }
+      }
+      msgRow += 0.6;
+      if (msgRow * fontSize > canvas.height + 30) {
+        msgActive = false;
+        msgPause = 90;
+      }
+    }
+  }
+
+  setInterval(draw, 55);
+})();
+
+// === Scroll to top ===
+(function scrollToTop() {
+  var btn = document.getElementById('scrollTop');
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        btn.classList.toggle('visible', window.scrollY > 400);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+  btn.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+})();
+
 // === Theme management ===
 (function themeInit() {
   var html = document.documentElement;
@@ -636,6 +779,22 @@ codersrank-summary {
   document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onEnd);
   pile.addEventListener('touchstart', onStart, {passive: false});
   document.addEventListener('touchmove', onMove, {passive: false}); document.addEventListener('touchend', onEnd);
+})();
+
+// === Hide CodersRank branding in shadow DOM ===
+(function hideBranding() {
+  var tags = ['codersrank-summary','codersrank-work-experience','codersrank-education','codersrank-portfolio','codersrank-skills-chart','codersrank-activity'];
+  function scan() {
+    tags.forEach(function(tag) {
+      document.querySelectorAll(tag).forEach(function(el) {
+        if (!el.shadowRoot) return;
+        var branded = el.shadowRoot.querySelector('[class*="branding"], [class*="powered"], [class*="Brand"], .cr-branding');
+        if (branded) branded.style.display = 'none';
+      });
+    });
+  }
+  setTimeout(scan, 1500);
+  setTimeout(scan, 3000);
 })();
 
 // === GitHub Calendar ===
